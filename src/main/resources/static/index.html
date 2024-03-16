@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bestilling av kinobiletter</title>
+  <script src="kode.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+
+
+<div class ="container">
+
+  <div class ="row">
+
+    <div class = "col-md-4">
+
+        <h1>Bestilling av kinobilletter</h1>
+
+      <form class = "form">
+        <div class ="form-group">
+          <label for="film">Velg film:</label>
+          <select id="film">
+            <option>Velg film her</option>
+            <option>Lange flate ballaer</option>
+            <option>Lange flate ballaer 2</option>
+            <option>Lange flate ballaer 3</option>
+            <option>Borat </option>
+          </select>
+        </div>
+
+        <br/>
+
+        <div class ="form-group">
+          <label for="antall">Antall:</label>
+          <input class="form-control" type="text" id="antall" maxlength="2" />
+          <span id="feilAntall" ></span>
+        </div>
+
+        <br/>
+
+        <div class ="form-group">
+          <label for="fornavn">Fornavn:</label>
+          <input class="form-control" type="text" id="fornavn" />
+          <span id="feilFnavn" ></span>
+        </div>
+
+        <br/>
+
+        <div class ="form-group">
+          <label for="etternavn">Etternavn:</label>
+          <input class="form-control" type="text" id="etternavn"  />
+          <span id="feilEnavn"></span>
+        </div>
+
+        <br/>
+
+        <div class ="form-group">
+          <label for="telefonnummer">Telefonnummer:</label>
+          <input class="form-control" type="text" id="telefonnummer" />
+          <span id="feilTlf" ></span>
+        </div>
+
+        <br/>
+
+        <div class ="form-group">
+          <label for="epost">E-post:</label>
+          <input class="form-control" type="text" id="epost"  />
+          <span id="feilEpost" ></span>
+        </div>
+        <br/>
+
+
+        <button class = "btn btn-primary" id="kjopBiletter" onclick="kjopBilettFunksjon()">Kjøp billett</button>
+
+      </form>
+
+    </div>
+      <div class = "col-md-8">
+
+        <h2>Alle billetter</h2>
+
+        <br/>
+
+        <button class ="btn btn-warning" id="slettBilettene" onclick="slettBiletter()">Slett alle billetter</button>
+
+        <br/><br/>
+
+        <div id="bilettListen"></div>
+
+
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+</body>
+</html>

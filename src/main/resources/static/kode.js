@@ -1,4 +1,5 @@
 
+
 let film;
 let antall;
 let feilAntall;
@@ -36,7 +37,15 @@ document.addEventListener("DOMContentLoaded", function (){
     bilettListen = document.getElementById("bilettListen");
     slettBilettene = document.getElementById("slettBilettene");
     console.log("DOMContentLoaded kjører!");
-    bilettListen.innerHTML = start;
+
+    let ut = "<table class='table table-dark'><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr></table>";
+    bilettListen.innerHTML=ut;
+
+    kjopBilett.addEventListener("click", kjopBilettFunksjon);
+    slettBilettene.addEventListener("click", slettBiletter);
+    hentBilletter();
+
+
 
 
 });
@@ -95,6 +104,7 @@ function kjopBilettFunksjon(){
     }
 
     if(!feilmelding){
+        console.log("ingen feil i input");
         addBilett(valgtFilm,valgtStringAntall,valgtFornavn,valgtEtternavn,valgtStringTLF,valgtEpost)
     }
     else{
@@ -107,7 +117,7 @@ const liste =[];
 
 function addBilett(film, antall, fNavn, eNavn, tlf, epost){
 
-    let bilett ={
+    let billett ={
         movie: film,
         amount: antall,
         firstname: fNavn,
@@ -115,25 +125,57 @@ function addBilett(film, antall, fNavn, eNavn, tlf, epost){
         telephone: tlf,
         email: epost,
     }
+
+    /*
     liste.push(bilett);
     console.log(liste);
     let utString = " "
     for(let i=0; i<liste.length; i++){
         utString +=  liste[i].movie + " "+liste[i].amount + " "+liste[i].firstname
-            +" "+ liste[i].surname + " "+liste[i].telephone +" "+liste[i].email +"\n";
+            +" "+ liste[i].surname + " "+liste[i].telephone +" "+liste[i].email;
+        utString += "<br>";
+
+    }
+    */
+
+    $.post("/lagre",billett, function(){
+        hentBilletter();
+    })
+
+}
+
+function hentBilletter(){
+    console.log("Hentefunksjonen kjører:)")
+    $.get("/hentBiletter", function(data){
+        formatering(data);
+
+    });
+}
+
+function formatering(billetter){
+    console.log("formatering kjører")
+
+    let utString = "<table class='table table-dark'><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th>";
+
+    for (const b of billetter) {
+
+        utString += "<tr><td>" + b.movie + "</td><td>" + b.amount + "</td><td>" + b.firstname + "</td><td>"
+            + b.surname + "</td><td>" + b.telephone + "</td><td>" + b.email + "</td></tr>";
 
     }
 
-    bilettListen.innerHTML = start;
-    bilettListen.innerHTML += utString;
+        utString +="</table>";
+
+        $("#bilettListen").html(utString);
+
+
+
 }
 
 function slettBiletter(){
-    console.log("Slettefunksjon kjlører")
-
-    while(liste.length>0){
-        liste.pop();
+    $.get("/slettBiletter",function(){
+        hentBilletter();
+    })
     }
 
-    bilettListen.innerHTML=start;
-}
+
